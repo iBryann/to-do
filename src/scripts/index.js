@@ -84,8 +84,6 @@ const index = (() => {
 
     function init() {
         renderTasks();
-        console.log(state.tasks)
-
         events();
     }
 
