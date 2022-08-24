@@ -4,30 +4,27 @@ import '../styles/styles.scss';
 'strict mode';
 
 const index = (() => {
-/*
-    C = create: OK
-    R = read: OK
-    U = update
-    D = delete
-*/
     const state = {
         tasks: [
-            { checked: false, text: 'lavar louça' },
-            { checked: false, text: 'dar ração ao cachorro' },
-            { checked: false, text: 'fazer compras' },
-            { checked: false, text: 'varrer a casa' },
+            { id: 1001, checked: false, text: 'lavar louça' },
+            { id: 1002, checked: true, text: 'dar ração ao cachorro' },
+            { id: 1003, checked: false, text: 'fazer compras' },
+            { id: 1004, checked: true, text: 'varrer a casa' },
         ]
-    }
+    };
 
     function renderTasks() {
         const { tasks } = state;
         const container = document.querySelector('#tasks');
         container.innerHTML = '';
         
-        tasks.forEach(({ text }, index) => {
+        tasks.forEach(({ checked, id, text }) => {
             container.insertAdjacentHTML('beforeend', `
-                <li class="task">
-                    <label><input type="checkbox">${text}</label>
+                <li class="task ${checked ? 'checked' : ''}" data-id=${id}>
+                    <label>
+                        <input type="checkbox" ${checked ? 'checked' : ''}>
+                        ${text}
+                    </label>
                     <button>
                         <img class="delete" src="/src/assets/delete.svg" alt="deletar">
                     </button>
@@ -38,11 +35,25 @@ const index = (() => {
 
     function createTask(text) {
         const newTask = {
+            id: Date.now(),
             checked: false,
             text: text
         };
 
         state.tasks.push(newTask);
+        renderTasks();
+    }
+
+    function deleteTask(id) {
+        state.tasks = state.tasks.filter(f => f.id !== Number(id));
+        renderTasks();
+    }
+
+    function updateTask(id, checked) {
+        const task = state.tasks.find(f => f.id === id);
+
+        task.checked = checked;
+        renderTasks();
     }
 
     function events() {
@@ -51,26 +62,32 @@ const index = (() => {
             const { text } = document.forms.task;
 
             createTask(text.value);
-
-            renderTasks();
         });
 
         document.querySelector('#tasks').addEventListener('click', event => {
             const element = event.target;
 
             if (element.classList.contains('delete')) {
-                alert('Deleta');
+                const row = element.closest('li');
+                const id = Number(row.dataset.id);
+                
+                deleteTask(id);
+            }
+            else if (element.tagName === 'INPUT') {
+                const row = element.closest('li');
+                const id = Number(row.dataset.id);
+                
+                updateTask(id, element.checked);
             }
         });
     }
 
-
     function init() {
         renderTasks();
+        console.log(state.tasks)
 
         events();
     }
-
 
     return {
         init

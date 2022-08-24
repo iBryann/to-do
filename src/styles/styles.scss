@@ -32,8 +32,8 @@ body {
 
             * {
                 border-radius: 6px;
-                font-size: 14px;
-                line-height: 30px;
+                font-size: 16px;
+                line-height: 41px;
                 color: $black;
             }
             
@@ -58,11 +58,10 @@ body {
             }
             
             button {
-                padding: 0 38px;
+                padding: 0 30px;
                 margin-left: 16px;
                 border: none;
                 background-color: $blue;
-                font-weight: 600;
                 cursor: pointer;
                 transition: filter .2s;
 
