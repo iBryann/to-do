@@ -43,6 +43,10 @@ body {
                 border: 1px solid $blue;
                 font-weight: 400;
 
+                &::placeholder {
+                    opacity: .7;
+                }
+
                 &:focus {
                     outline: 2px solid $blue;
                 }
@@ -60,7 +64,7 @@ body {
                 background-color: $blue;
                 font-weight: 600;
                 cursor: pointer;
-                transition: .2s;
+                transition: filter .2s;
 
                 &:hover {
                     filter: brightness(1.05);
@@ -102,7 +106,9 @@ body {
                     background-color: transparent;
                     border: none;
                     cursor: pointer;
-                    transition: 1s;
+                    padding: 0;
+                    transform-origin: 12px 12px;
+                    transition: .6s;
 
                     &:hover {
                         transform: rotate(-360deg);

@@ -4,6 +4,12 @@ import '../styles/styles.scss';
 'strict mode';
 
 const index = (() => {
+/*
+    C = create: OK
+    R = read: OK
+    U = update
+    D = delete
+*/
     const state = {
         tasks: [
             { checked: false, text: 'lavar louça' },
