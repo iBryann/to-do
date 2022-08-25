@@ -11,11 +11,11 @@ const index = (() => {
     function saveLocalStorage() {
         const tasksStr = JSON.stringify(state.tasks);
 
-        localStorage.setItem('lista', tasksStr);
+        localStorage.setItem('@todo:list', tasksStr);
     }
 
     function loadLocalStorage() {
-        const tasksStr = localStorage.getItem('lista');
+        const tasksStr = localStorage.getItem('@todo:list');
         const loadedTasks = JSON.parse(tasksStr);
 
         state.tasks = loadedTasks;
