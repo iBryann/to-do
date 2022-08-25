@@ -5,15 +5,25 @@ import '../styles/styles.scss';
 
 const index = (() => {
     const state = {
-        tasks: [
-            { id: 1001, checked: false, text: 'lavar louça' },
-            { id: 1002, checked: true, text: 'dar ração ao cachorro' },
-            { id: 1003, checked: false, text: 'fazer compras' },
-            { id: 1004, checked: true, text: 'varrer a casa' },
-        ]
+        tasks: []
     };
 
+    function saveLocalStorage() {
+        const tasksStr = JSON.stringify(state.tasks);
+
+        localStorage.setItem('lista', tasksStr);
+    }
+
+    function loadLocalStorage() {
+        const tasksStr = localStorage.getItem('lista');
+        const loadedTasks = JSON.parse(tasksStr);
+
+        state.tasks = loadedTasks;
+    }
+
     function renderTasks() {
+        saveLocalStorage();
+
         const { tasks } = state;
         const container = document.querySelector('#tasks');
         container.innerHTML = '';
@@ -50,7 +60,7 @@ const index = (() => {
     }
 
     function updateTask(id, checked) {
-        const task = state.tasks.find(f => f.id === id);
+        const task = state.tasks.find(f => f.id === Number(id));
 
         task.checked = checked;
         renderTasks();
@@ -69,13 +79,13 @@ const index = (() => {
 
             if (element.classList.contains('delete')) {
                 const row = element.closest('li');
-                const id = Number(row.dataset.id);
+                const id = row.dataset.id;
                 
                 deleteTask(id);
             }
             else if (element.tagName === 'INPUT') {
                 const row = element.closest('li');
-                const id = Number(row.dataset.id);
+                const id = row.dataset.id;
                 
                 updateTask(id, element.checked);
             }
@@ -83,6 +93,7 @@ const index = (() => {
     }
 
     function init() {
+        loadLocalStorage();
         renderTasks();
         events();
     }
