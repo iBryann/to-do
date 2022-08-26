@@ -17,18 +17,18 @@ const index = (() => {
     function loadLocalStorage() {
         const tasksStr = localStorage.getItem('@todo:list');
         const loadedTasks = JSON.parse(tasksStr);
-
         state.tasks = loadedTasks;
+
+        renderTasks();
     }
 
     function renderTasks() {
         saveLocalStorage();
 
-        const { tasks } = state;
         const container = document.querySelector('#tasks');
         container.innerHTML = '';
         
-        tasks.forEach(({ checked, id, text }) => {
+        state.tasks.forEach(({ checked, id, text }) => {
             container.insertAdjacentHTML('beforeend', `
                 <li class="task ${checked ? 'checked' : ''}" data-id=${id}>
                     <label>
@@ -36,7 +36,7 @@ const index = (() => {
                         ${text}
                     </label>
                     <button>
-                        <img class="delete" src="/src/assets/delete.svg" alt="deletar">
+                        <img class="delete" src="/delete.svg" alt="deletar">
                     </button>
                 </li>
             `);
@@ -72,6 +72,7 @@ const index = (() => {
             const { text } = document.forms.task;
 
             createTask(text.value);
+            text.value = '';
         });
 
         document.querySelector('#tasks').addEventListener('click', event => {
@@ -94,7 +95,6 @@ const index = (() => {
 
     function init() {
         loadLocalStorage();
-        renderTasks();
         events();
     }
 
