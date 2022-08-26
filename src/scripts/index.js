@@ -25,22 +25,30 @@ const index = (() => {
     function renderTasks() {
         saveLocalStorage();
 
+        const { tasks } = state;
         const container = document.querySelector('#tasks');
         container.innerHTML = '';
         
-        state.tasks.forEach(({ checked, id, text }) => {
+        if (tasks.length) {
+            tasks.forEach(({ checked, id, text }) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <li class="task ${checked ? 'checked' : ''}" data-id=${id}>
+                        <label>
+                            <input type="checkbox" ${checked ? 'checked' : ''}>
+                            ${text}
+                        </label>
+                        <button>
+                            <img class="delete" src="/delete.svg" alt="deletar">
+                        </button>
+                    </li>
+                `);
+            });
+        }
+        else {
             container.insertAdjacentHTML('beforeend', `
-                <li class="task ${checked ? 'checked' : ''}" data-id=${id}>
-                    <label>
-                        <input type="checkbox" ${checked ? 'checked' : ''}>
-                        ${text}
-                    </label>
-                    <button>
-                        <img class="delete" src="/delete.svg" alt="deletar">
-                    </button>
-                </li>
+                <div class="empty">Não há tarefas 😮</div>
             `);
-        });
+        }
     }
 
     function createTask(text) {

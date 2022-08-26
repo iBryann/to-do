@@ -72,6 +72,14 @@ body {
         }
 
         #tasks {
+            .empty {
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 17px;
+                text-align: center;
+                color: $black;
+            }
+
             .task {
                 display: flex;
                 align-items: center;
@@ -88,8 +96,8 @@ body {
                     flex: 1;
                     display: flex;
                     align-items: center;
-                    font-weight: 400;
                     font-size: 16px;
+                    font-weight: 400;
                     line-height: 17px;
                     color: $black;
                     cursor: pointer;
